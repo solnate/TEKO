@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="26a72488-fd6b-4c0c-91fd-773300bb8a24" name="Changes" comment="init">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/google_code_gson.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/HttpTEKO/HttpRequestPOST.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/HttpTEKO/postdata/Dst.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/HttpTEKO/postdata/Order.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/HttpTEKO/postdata/PostData.java" afterDir="false" />
+    <list default="true" id="26a72488-fd6b-4c0c-91fd-773300bb8a24" name="Changes" comment="initpost">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TEKO.iml" beforeDir="false" afterPath="$PROJECT_DIR$/TEKO.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/HttpTEKO/HttpRequestPOST.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/HttpTEKO/HttpRequestPOST.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +89,8 @@
       <option name="presentableId" value="Default" />
       <updated>1657547622313</updated>
       <workItem from="1657547626406" duration="6074000" />
-      <workItem from="1657554091813" duration="3524000" />
+      <workItem from="1657554091813" duration="5283000" />
+      <workItem from="1657572372283" duration="1000000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1657548278867</created>
@@ -103,7 +99,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657548278867</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="initpost">
+      <created>1657557902845</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1657557902845</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -122,6 +125,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="init" />
-    <option name="LAST_COMMIT_MESSAGE" value="init" />
+    <MESSAGE value="initpost" />
+    <option name="LAST_COMMIT_MESSAGE" value="initpost" />
   </component>
 </project>

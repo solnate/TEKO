@@ -32,6 +32,7 @@ public class HttpRequestPOST {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty("Signature", "VgepHaYJBn9jwAg3N6wzFhi8UeQ=");
             connection.setConnectTimeout(5000);
             connection.setReadTimeout(5000);
             connection.setDoOutput(true);
