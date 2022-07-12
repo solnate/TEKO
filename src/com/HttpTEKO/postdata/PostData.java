@@ -21,6 +21,18 @@ public class PostData {
         this.ord = ord;
     }
 
+    public PostData(String id, String showcase,
+                    String product,
+                    int amount, int currency, int exponent,
+                    String cls, String phone_number, String operator,
+                    Order ord) {
+        this.client = new Client(id, showcase);
+        this.product = product;
+        this.payment = new Payment(amount, currency, exponent);
+        this.src = new Src(cls, phone_number, operator);
+        this.ord = ord;
+    }
+
     class Client {
         String id;
         String showcase;
