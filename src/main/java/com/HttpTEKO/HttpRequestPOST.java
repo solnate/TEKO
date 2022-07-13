@@ -2,6 +2,7 @@ package com.HttpTEKO;
 
 import com.HttpTEKO.postdata.*;
 import com.google.gson.Gson;
+import org.apache.commons.codec.digest.HmacUtils;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -26,17 +27,22 @@ public class HttpRequestPOST {
                 10000, 643, 3,
                 "mc", "78005553535", "mts",
                 dst,
-                ord);
+                ord,
+                "http://89.169.28.251:80");
 
         String json = gson.toJson(data);
         byte[] out = json.getBytes();
+
+        String hmacdata = "baeldung";
+        String key = "123456";
+        String sign = HmacUtils.hmacSha1Hex(key, hmacdata);
 
         try{
             URL url = new URL(link);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");
-            connection.setRequestProperty("Signature", "dfdg4gdfg");
+            connection.setRequestProperty("Signature", sign);
             connection.setConnectTimeout(5000);
             connection.setReadTimeout(5000);
             connection.setDoOutput(true);
