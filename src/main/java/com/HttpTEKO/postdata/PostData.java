@@ -8,36 +8,25 @@ public class PostData {
     Dst dst;
     Order ord;
     String callback;
+    String tag;
     public PostData(String id, String showcase,
                     String product,
                     int amount, int currency, int exponent,
                     String cls, String phone_number, String operator,
-                    Dst dst,
                     Order ord,
-                    String callback) {
+                    String callback,
+                    String tag) {
         this.client = new Client(id, showcase);
         this.product = product;
         this.payment = new Payment(amount, currency, exponent);
         this.src = new Src(cls, phone_number, operator);
+        this.ord = ord;
+        this.callback = callback;
+        this.tag = tag;
+    }
+    public void initdst(Dst dst){
         this.dst = dst;
-        this.ord = ord;
-        this.callback = callback;
     }
-
-    public PostData(String id, String showcase,
-                    String product,
-                    int amount, int currency, int exponent,
-                    String cls, String phone_number, String operator,
-                    Order ord,
-                    String callback) {
-        this.client = new Client(id, showcase);
-        this.product = product;
-        this.payment = new Payment(amount, currency, exponent);
-        this.src = new Src(cls, phone_number, operator);
-        this.ord = ord;
-        this.callback = callback;
-    }
-
     class Client {
         String id;
         String showcase;

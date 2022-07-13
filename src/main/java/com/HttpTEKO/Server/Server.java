@@ -5,10 +5,9 @@ import com.google.gson.Gson;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 
-/**
- * Written by Martin Ombura Jr. <@martinomburajr>
- */
 public class Server {
     public static void main(String[] args) {
         connectToServer();
@@ -45,7 +44,7 @@ public class Server {
                     String inputLine;
                     StringBuffer content = new StringBuffer();
                     while ((inputLine = in.readLine()) != null) {
-                        content.append(inputLine);
+                        content.append(inputLine + "\n\r");
                     }
                     System.out.println(content);
                     in.close();

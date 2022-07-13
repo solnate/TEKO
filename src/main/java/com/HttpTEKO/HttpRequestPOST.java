@@ -2,47 +2,32 @@ package com.HttpTEKO;
 
 import com.HttpTEKO.postdata.*;
 import com.google.gson.Gson;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.digest.HmacAlgorithms;
 import org.apache.commons.codec.digest.HmacUtils;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.time.temporal.Temporal;
 import java.util.List;
 import java.util.Map;
 
 public class HttpRequestPOST {
-    public static void main(String[] args) {
-        String link = "https://gate-test-02.teko.io/api/initiators/default/initPayment";
-
+    public void send(String link, PostData data) {
         Gson gson = new Gson();
-
-        Dst dst = new Dst("Y6UBATOP9000", true, "Europe");
-        Order ord = new Order("1122334455", 142843063,"transaction",
-                "mobile_app",  "some_value");
-        PostData data = new PostData(
-                "company_name", "app",
-                "world_of_warcraft",
-                10000, 643, 3,
-                "mc", "78005553535", "mts",
-                dst,
-                ord,
-                "http://89.169.28.251:80");
-
         String json = gson.toJson(data);
         byte[] out = json.getBytes();
-
-        String hmacdata = "baeldung";
-        String key = "123456";
-        String sign = HmacUtils.hmacSha1Hex(key, hmacdata);
-
+        byte[] key = "TestSecret".getBytes();
+        HmacUtils hm256 = new HmacUtils(HmacAlgorithms.HMAC_SHA_1, key);
+        String hmac = Base64.encodeBase64String(hm256.hmac(json));
+        System.out.println(hmac);
         try{
             URL url = new URL(link);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");
-            connection.setRequestProperty("Signature", sign);
+            connection.setRequestProperty("Signature", hmac);
             connection.setConnectTimeout(5000);
             connection.setReadTimeout(5000);
             connection.setDoOutput(true);
