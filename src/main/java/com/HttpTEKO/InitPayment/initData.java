@@ -1,24 +1,25 @@
-package com.HttpTEKO.postdata;
+package com.HttpTEKO.InitPayment;
 
-public class PostData {
+public class initData {
     Client client;
     String product;
     Payment payment;
+    Payment src_payment;
     Src src;
     Dst dst;
     Order order;
     String callback;
     String tag;
-    public PostData(String id, String showcase,
+    public initData(String id, String showcase,
                     String product,
-                    int amount, int currency, int exponent,
+                    Payment payment,
                     String cls, String phone_number, String operator,
                     Order order,
                     String callback,
                     String tag) {
         this.client = new Client(id, showcase);
         this.product = product;
-        this.payment = new Payment(amount, currency, exponent);
+        this.payment = payment;
         this.src = new Src(cls, phone_number, operator);
         this.order = order;
         this.callback = callback;
@@ -27,6 +28,7 @@ public class PostData {
     public void initdst(Dst dst){
         this.dst = dst;
     }
+    public void initPayment(Payment payment){ this.src_payment = payment; }
     class Client {
         String id;
         String showcase;
@@ -34,17 +36,6 @@ public class PostData {
         public Client(String id, String showcase){
             this.id = id;
             this.showcase = showcase;
-        }
-    }
-
-    class Payment {
-        int amount;
-        int currency;
-        int exponent;
-        public Payment(int amount, int currency, int exponent){
-            this.amount = amount;
-            this.currency = currency;
-            this.exponent = exponent;
         }
     }
 

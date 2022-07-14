@@ -39,5 +39,7 @@ public class Response  {
         if (body != null)  {
             out.write(body.getBytes());
         }
+        System.out.println("Sent:");
+        System.out.println(body);
     }
 }

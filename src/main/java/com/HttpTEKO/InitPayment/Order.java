@@ -1,4 +1,4 @@
-package com.HttpTEKO.postdata;
+package com.HttpTEKO.InitPayment;
 
 public class Order {
     Transaction transaction;

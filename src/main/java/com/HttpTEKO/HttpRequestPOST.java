@@ -1,6 +1,6 @@
 package com.HttpTEKO;
 
-import com.HttpTEKO.postdata.*;
+import com.HttpTEKO.InitPayment.*;
 import com.google.gson.Gson;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.HmacAlgorithms;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 public class HttpRequestPOST {
-    public void send(String link, PostData data) {
+    public void send(String link, Object data) {
         Gson gson = new Gson();
         String json = gson.toJson(data);
         byte[] out = json.getBytes();
@@ -28,8 +28,8 @@ public class HttpRequestPOST {
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("Signature", hmac);
-            connection.setConnectTimeout(5000);
-            connection.setReadTimeout(5000);
+            connection.setConnectTimeout(10000);
+            connection.setReadTimeout(10000);
             connection.setDoOutput(true);
             connection.setDoInput(true);
             connection.connect();
