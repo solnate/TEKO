@@ -6,21 +6,21 @@ public class PostData {
     Payment payment;
     Src src;
     Dst dst;
-    Order ord;
+    Order order;
     String callback;
     String tag;
     public PostData(String id, String showcase,
                     String product,
                     int amount, int currency, int exponent,
                     String cls, String phone_number, String operator,
-                    Order ord,
+                    Order order,
                     String callback,
                     String tag) {
         this.client = new Client(id, showcase);
         this.product = product;
         this.payment = new Payment(amount, currency, exponent);
         this.src = new Src(cls, phone_number, operator);
-        this.ord = ord;
+        this.order = order;
         this.callback = callback;
         this.tag = tag;
     }
