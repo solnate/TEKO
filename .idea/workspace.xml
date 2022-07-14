@@ -5,12 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="26a72488-fd6b-4c0c-91fd-773300bb8a24" name="Changes" comment="server">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/Server/ResponseData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/jsontest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/Server/Data.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/Server/Response.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/Server/Response.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/Server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/Server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/postdata/PostData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/postdata/PostData.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,7 +120,7 @@
       <workItem from="1657639674369" duration="3753000" />
       <workItem from="1657659902929" duration="22833000" />
       <workItem from="1657785639893" duration="848000" />
-      <workItem from="1657787869740" duration="12705000" />
+      <workItem from="1657787869740" duration="14702000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1657548278867</created>
@@ -181,7 +178,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657737173161</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="server">
+      <created>1657801693377</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1657801693377</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -205,5 +209,21 @@
     <MESSAGE value="-" />
     <MESSAGE value="server" />
     <option name="LAST_COMMIT_MESSAGE" value="server" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/HttpTEKO/Server/Server.java</url>
+          <line>19</line>
+          <option name="timeStamp" value="40" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/HttpTEKO/Server/Server.java</url>
+          <line>28</line>
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

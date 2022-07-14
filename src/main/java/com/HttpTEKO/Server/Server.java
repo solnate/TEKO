@@ -25,6 +25,7 @@ public class Server {
                 String inputLine;
                 String jsonString = null;
                 StringBuffer content = new StringBuffer();
+                while(!in.ready());
                 while (in.ready()) {
                     inputLine = in.readLine();
                     content.append(inputLine + "\n\r");
@@ -34,36 +35,29 @@ public class Server {
                     }
                 }
 
-                String response_json = "";
+                String json;
                 if(jsonString != null) {
                     Gson gson = new Gson();
                     Map map = gson.fromJson(jsonString, Map.class);
                     ResponseData data = new ResponseData("true",
                             ((Map) map.get("tx")).get("id").toString(),
                             ((Map) map.get("tx")).get("start_t").toString());
-                    String json = gson.toJson(data);
-                    response_json = "HTTP/1.1 200 OK" + "\n\r" +
-                            "Content-Length: " + json.getBytes().length + "\n\r" +
-                            "\n\r" +
-                            json;
+                    json = gson.toJson(data);
                 }
                 else{
-                    String json = "get";
-                    response_json = "HTTP/1.1 200 OK" + "\n\r" +
-                            "Content-Length: " + json.getBytes().length + "\n\r" +
-                            "\n\r" +
-                            json;
+                    json = "get";
                 }
                 Response response = new Response(connectionSocket.getOutputStream());
                 response.setResponseCode(200, "OK");
-                response.addHeader("Content-Type", "text/html");
-                response.addBody(response_json);
+                response.addHeader("Content-Type", "application/json");
+                response.addBody(json);
                 response.send();
 
+                in.close();
                 connectionSocket.close();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         }
     }
 }

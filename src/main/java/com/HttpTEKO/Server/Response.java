@@ -31,7 +31,6 @@ public class Response  {
     }
 
     public void send() throws IOException {
-        headers.put("Connection", "Close");
         out.write(("HTTP/1.1 " + statusCode + " " + statusMessage + "\r\n").getBytes());
         for (String headerName : headers.keySet())  {
             out.write((headerName + ": " + headers.get(headerName) + "\r\n").getBytes());
