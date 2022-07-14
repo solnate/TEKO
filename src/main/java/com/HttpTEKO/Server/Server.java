@@ -22,7 +22,7 @@ public class Server {
                 Reader streamReader = null;
                 BufferedReader in = new BufferedReader(
                         new InputStreamReader(connectionSocket.getInputStream()));
-                String inputLine;
+                String inputLine = null;
                 String jsonString = null;
                 StringBuffer content = new StringBuffer();
                 while(!in.ready());

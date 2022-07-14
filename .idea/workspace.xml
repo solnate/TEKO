@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="26a72488-fd6b-4c0c-91fd-773300bb8a24" name="Changes" comment="server">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/Server/Response.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/Server/Response.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/Server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/Server/Server.java" afterDir="false" />
-    </list>
+    <list default="true" id="26a72488-fd6b-4c0c-91fd-773300bb8a24" name="Changes" comment="server" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -50,7 +46,7 @@
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
   }
 }</component>
-  <component name="RunManager" selected="Application.init">
+  <component name="RunManager" selected="Application.Server">
     <configuration name="Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.HttpTEKO.Server.Server" />
       <module name="TEKO" />
@@ -97,8 +93,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.init" />
         <item itemvalue="Application.Server" />
+        <item itemvalue="Application.init" />
         <item itemvalue="Application.jsontest" />
       </list>
     </recent_temporary>
@@ -120,7 +116,7 @@
       <workItem from="1657639674369" duration="3753000" />
       <workItem from="1657659902929" duration="22833000" />
       <workItem from="1657785639893" duration="848000" />
-      <workItem from="1657787869740" duration="14702000" />
+      <workItem from="1657787869740" duration="15304000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1657548278867</created>
@@ -185,7 +181,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657801693377</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="server">
+      <created>1657803781361</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1657803781361</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
