@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="26a72488-fd6b-4c0c-91fd-773300bb8a24" name="Changes" comment="some documentation">
+    <list default="true" id="26a72488-fd6b-4c0c-91fd-773300bb8a24" name="Changes" comment="Pretty json">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/RequestFromFile.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/HttpRequestPOST.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/HttpRequestPOST.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/InitPayment/initiatorsRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/InitPayment/initiatorsRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/isPaymentPossible/merchantRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/isPaymentPossible/merchantRequest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,6 +17,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="HTTP Request" />
       </list>
     </option>
   </component>
@@ -52,7 +51,28 @@
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
   }
 }</component>
-  <component name="RunManager" selected="Application.merchantRequest">
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\solna\IdeaProjects\TEKO\src\main\java\com\HttpTEKO\isPaymentPossible" />
+      <recent name="C:\Users\solna\IdeaProjects\TEKO\src\main\resources" />
+      <recent name="C:\Users\solna\IdeaProjects\TEKO\src\main\java\com\HttpTEKO" />
+      <recent name="C:\Users\solna\IdeaProjects\TEKO\src\main\java\com\HttpTEKO\InitPayment" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.com.HttpTEKO.InitPayment.initiatorsRequest">
+    <configuration name="RequestFromFile" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.HttpTEKO.RequestFromFile" />
+      <module name="TEKO" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.HttpTEKO.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.HttpTEKO.Server.Server" />
       <module name="TEKO" />
@@ -66,12 +86,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="initiatorsRequest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="com.HttpTEKO.InitPayment.initiatorsRequest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.HttpTEKO.InitPayment.initiatorsRequest" />
       <module name="TEKO" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.HttpTEKO.isPaymentPossible.*" />
+          <option name="PATTERN" value="com.HttpTEKO.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -79,12 +99,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="merchantRequest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="com.HttpTEKO.isPaymentPossible.merchantRequest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.HttpTEKO.isPaymentPossible.merchantRequest" />
       <module name="TEKO" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.HttpTEKO.isPaymentPossible.*" />
+          <option name="PATTERN" value="com.HttpTEKO.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -93,15 +113,17 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.initiatorsRequest" />
-      <item itemvalue="Application.merchantRequest" />
+      <item itemvalue="Application.com.HttpTEKO.merchantRequestFromFile" />
+      <item itemvalue="Application.com.HttpTEKO.InitPayment.initiatorsRequest" />
+      <item itemvalue="Application.com.HttpTEKO.isPaymentPossible.merchantRequest" />
       <item itemvalue="Application.Server" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.merchantRequest" />
+        <item itemvalue="Application.com.HttpTEKO.InitPayment.initiatorsRequest" />
+        <item itemvalue="Application.com.HttpTEKO.merchantRequestFromFile" />
         <item itemvalue="Application.Server" />
-        <item itemvalue="Application.initiatorsRequest" />
+        <item itemvalue="Application.com.HttpTEKO.isPaymentPossible.merchantRequest" />
       </list>
     </recent_temporary>
   </component>
@@ -124,7 +146,7 @@
       <workItem from="1657785639893" duration="848000" />
       <workItem from="1657787869740" duration="38404000" />
       <workItem from="1657834369674" duration="4292000" />
-      <workItem from="1657885288655" duration="12792000" />
+      <workItem from="1657885288655" duration="15351000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1657548278867</created>
@@ -224,7 +246,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657902802725</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Pretty json">
+      <created>1657907868223</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1657907868223</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -250,9 +279,19 @@
     <MESSAGE value="server work" />
     <MESSAGE value="partial work" />
     <MESSAGE value="some documentation" />
-    <option name="LAST_COMMIT_MESSAGE" value="some documentation" />
+    <MESSAGE value="Pretty json" />
+    <option name="LAST_COMMIT_MESSAGE" value="Pretty json" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/HttpTEKO/HttpRequestPOST.java</url>
+          <line>29</line>
+          <option name="timeStamp" value="65" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="map" />
