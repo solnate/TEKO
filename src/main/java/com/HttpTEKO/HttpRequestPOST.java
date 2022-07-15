@@ -1,6 +1,9 @@
 package com.HttpTEKO;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -21,7 +24,7 @@ import java.util.Map;
 public class HttpRequestPOST {
     public void send(String link, Object data) {
         /** Создание json */
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(data);
         byte[] out = json.getBytes();
         byte[] key = "TestSecret".getBytes();
@@ -84,7 +87,10 @@ public class HttpRequestPOST {
             while ((inputLine = in.readLine()) != null) {
                 content.append(inputLine);
             }
-            System.out.println(content);
+            /** Pretty json */
+            JsonElement je = JsonParser.parseString(content.toString());
+            String prettyJsonString = gson.toJson(je);
+            System.out.println(prettyJsonString);
 
             /** Запись в mongodb */
             doc.append("status code", status);

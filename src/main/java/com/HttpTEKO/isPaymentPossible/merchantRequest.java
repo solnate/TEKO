@@ -20,6 +20,6 @@ public class merchantRequest {
                 ord,
                 "Europe");
         data.initPayment(new Payment(5000, 343, 3));
-        init.send("http://x.x.x.x:80", data);
+        init.send("http://89.169.52.44:80", data);
     }
 }

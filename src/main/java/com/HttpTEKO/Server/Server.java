@@ -1,10 +1,7 @@
 package com.HttpTEKO.Server;
 
 import com.HttpTEKO.InitPayment.Payment;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
+import com.google.gson.*;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -61,7 +58,12 @@ public class Server {
                         jsonString += (char) intParser;
                     }
 
-                    System.out.println(jsonString);
+                    /** Pretty json */
+                    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                    JsonElement je = JsonParser.parseString(jsonString);
+                    String prettyJsonString = gson.toJson(je);
+                    System.out.println(prettyJsonString);
+
                     String json = "";
                     String success = "false";
                     OutputStream out = connectionSocket.getOutputStream();
@@ -71,7 +73,6 @@ public class Server {
                         doc.append("receive", jsonString);
                         try {
                             /** Создание json */
-                            Gson gson = new Gson();
                             JsonObject map = gson.fromJson(jsonString, JsonObject.class);
                             response.setResponseCode(200, "OK");
                             if (map.has("payment")) {
@@ -123,7 +124,7 @@ public class Server {
 
     /** Функция формирования ответа об ошибке */
     public static String errorMessage(Response response, String message){
-        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().create();
         response.setResponseCode(402, "Server error");
         ResponseData data = new ResponseData("false", 402, message);
         return gson.toJson(data);

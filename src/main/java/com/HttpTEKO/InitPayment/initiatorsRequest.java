@@ -20,7 +20,7 @@ public class initiatorsRequest {
                 "mc", "78005553535", "mts",
                 ord,
                 "Europe");
-        data.initCallback("http://x.x.x.x:80");
+        data.initCallback("http:///89.169.52.44:80");
         init.send("https://gate-test-02.teko.io/api/initiators/default/initPayment", data);
     }
 }
