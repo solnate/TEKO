@@ -1,6 +1,7 @@
 ## initiatorsRequest
 - InitPayment/
 - POST-запрос протокола инициатора
+- Можно получить callback на Server
 ```
 null: [HTTP/1.1 200 OK]
 X-Frame-Options: [DENY]
@@ -49,6 +50,7 @@ Receive:
 ```
 ## Server
 - Http-обработчик запроса мерчанта и передачи ответа
+- Тестировал на открытом порту + merchantRequest + https://reqbin.com/
 
 ``` Socket[addr=/89.169.52.44,port=56916,localport=80]
     Receive:
@@ -116,7 +118,8 @@ Receive:
 	}
    }
 ```
-
+## Пример записей в mongodb
+![alt text](https://github.com/solnate/TEKO/blob/master/Снимок%20экрана%202022-07-15%20210132.png)
 # Задание
 > 1. Разобраться с тем, что за формат такой JSON
 > 2. Выбрать библиотеку работы с JSON на языке программирования, на котором планируете делать (идеальный вариант Java/Scala, библиотека json4s)
