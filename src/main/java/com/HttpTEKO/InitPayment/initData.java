@@ -15,20 +15,19 @@ public class initData {
                     Payment payment,
                     String cls, String phone_number, String operator,
                     Order order,
-                    String callback,
                     String tag) {
         this.client = new Client(id, showcase);
         this.product = product;
         this.payment = payment;
         this.src = new Src(cls, phone_number, operator);
         this.order = order;
-        this.callback = callback;
         this.tag = tag;
     }
     public void initdst(Dst dst){
         this.dst = dst;
     }
     public void initPayment(Payment payment){ this.src_payment = payment; }
+    public void initCallback(String callback){ this.callback = callback; }
     class Client {
         String id;
         String showcase;

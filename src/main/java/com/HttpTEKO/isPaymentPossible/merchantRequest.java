@@ -1,10 +1,11 @@
-package com.HttpTEKO;
+package com.HttpTEKO.isPaymentPossible;
 
+import com.HttpTEKO.HttpRequestPOST;
 import com.HttpTEKO.InitPayment.Order;
 import com.HttpTEKO.InitPayment.Payment;
 import com.HttpTEKO.isPaymentPossible.merchData;
 
-public class merch {
+public class merchantRequest {
     public static void main(String[] args) {
         HttpRequestPOST init = new HttpRequestPOST();
         //Dst dst = new Dst("Y6UBATOP9000", true, "Europe");
@@ -17,9 +18,8 @@ public class merch {
                 payment,
                 "mc", "78005553535", "mts",
                 ord,
-                "http://89.169.28.251:80",
                 "Europe");
-        data.initPayment(new Payment(10100, 643, 3));
-        init.send("http://89.169.28.251:80", data);
+        data.initPayment(new Payment(5000, 343, 3));
+        init.send("http://89.169.52.44:80", data);
     }
 }

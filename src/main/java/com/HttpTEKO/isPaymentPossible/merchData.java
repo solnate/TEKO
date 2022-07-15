@@ -10,7 +10,6 @@ public class merchData extends initData {
             Payment payment,
             String cls, String phone_number, String operator,
             Order order,
-            String callback,
             String tag
     ){
         super(
@@ -19,7 +18,6 @@ public class merchData extends initData {
                 payment,
                 cls, phone_number, operator,
                 order,
-                callback,
                 tag
         );
     }

@@ -1,10 +1,11 @@
-package com.HttpTEKO;
+package com.HttpTEKO.InitPayment;
 
+import com.HttpTEKO.HttpRequestPOST;
 import com.HttpTEKO.InitPayment.Order;
 import com.HttpTEKO.InitPayment.Payment;
 import com.HttpTEKO.InitPayment.initData;
 
-public class init {
+public class initiatorsRequest {
     public static void main(String[] args) {
         HttpRequestPOST init = new HttpRequestPOST();
         //Dst dst = new Dst("Y6UBATOP9000", true, "Europe");
@@ -17,8 +18,8 @@ public class init {
                 payment,
                 "mc", "78005553535", "mts",
                 ord,
-                "http://89.169.28.251:80",
                 "Europe");
-        init.send("http://89.169.28.251:80", data);
+        data.initCallback("http://89.169.28.251:80");
+        init.send("https://gate-test-02.teko.io/api/initiators/default/initPayment", data);
     }
 }

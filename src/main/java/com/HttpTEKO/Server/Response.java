@@ -31,15 +31,18 @@ public class Response  {
     }
 
     public void send() throws IOException {
+        System.out.println();
+        System.out.println("Sent:");
+        System.out.println("HTTP/1.1 " + statusCode + " " + statusMessage);
         out.write(("HTTP/1.1 " + statusCode + " " + statusMessage + "\r\n").getBytes());
         for (String headerName : headers.keySet())  {
+            System.out.println(headerName + ": " + headers.get(headerName));
             out.write((headerName + ": " + headers.get(headerName) + "\r\n").getBytes());
         }
         out.write("\r\n".getBytes());
         if (body != null)  {
+            System.out.println(body);
             out.write(body.getBytes());
         }
-        System.out.println("Sent:");
-        System.out.println(body);
     }
 }
