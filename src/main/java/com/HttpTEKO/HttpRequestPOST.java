@@ -1,9 +1,6 @@
 package com.HttpTEKO;
 
-import com.HttpTEKO.InitPayment.*;
 import com.google.gson.Gson;
-import com.mongodb.DB;
-import com.mongodb.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -20,21 +17,28 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+/** Выполняет POST-запрос */
 public class HttpRequestPOST {
     public void send(String link, Object data) {
+        /** Создание json */
         Gson gson = new Gson();
         String json = gson.toJson(data);
         byte[] out = json.getBytes();
         byte[] key = "TestSecret".getBytes();
+
+        /** hmac-sha1 */
         HmacUtils hm256 = new HmacUtils(HmacAlgorithms.HMAC_SHA_1, key);
         String hmac = Base64.encodeBase64String(hm256.hmac(json));
         System.out.println(hmac);
 
+        /** Подключение к mongodb */
         var mongoClient = MongoClients.create("mongodb://localhost:27017");
         MongoDatabase database = mongoClient.getDatabase("testdb");
         MongoCollection<Document> collection = database.getCollection("initiator");
         var doc = new Document();
         doc.append("date", new Date());
+
+        /** Создание http-запроса */
         try{
             URL url = new URL(link);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -47,6 +51,7 @@ public class HttpRequestPOST {
             connection.setDoInput(true);
             connection.connect();
 
+            /** Отправка запроса */
             try{
                 OutputStream os = connection.getOutputStream();
                 os.write(out);
@@ -57,11 +62,13 @@ public class HttpRequestPOST {
                 System.err.println(e.getMessage());
             }
 
+            /** Чтение заголовка ответа */
             Map<String, List<String>> map = connection.getHeaderFields();
             for (Map.Entry<String, List<String>> entry : map.entrySet()) {
                 System.out.println(entry.getKey() + ": " + entry.getValue());
             }
 
+            /** Чтение статуса */
             int status = connection.getResponseCode();
             Reader streamReader = null;
             if (status > 299) {
@@ -70,6 +77,7 @@ public class HttpRequestPOST {
                 streamReader = new InputStreamReader(connection.getInputStream());
             }
 
+            /** Чтение данных */
             BufferedReader in = new BufferedReader(streamReader);
             String inputLine;
             StringBuffer content = new StringBuffer();
@@ -77,6 +85,8 @@ public class HttpRequestPOST {
                 content.append(inputLine);
             }
             System.out.println(content);
+
+            /** Запись в mongodb */
             doc.append("status code", status);
             doc.append("received", content.toString());
             collection.insertOne(doc);

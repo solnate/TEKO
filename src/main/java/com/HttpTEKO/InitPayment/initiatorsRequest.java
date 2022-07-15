@@ -5,6 +5,7 @@ import com.HttpTEKO.InitPayment.Order;
 import com.HttpTEKO.InitPayment.Payment;
 import com.HttpTEKO.InitPayment.initData;
 
+/** Формирует json для протокола инициатора */
 public class initiatorsRequest {
     public static void main(String[] args) {
         HttpRequestPOST init = new HttpRequestPOST();
@@ -19,7 +20,7 @@ public class initiatorsRequest {
                 "mc", "78005553535", "mts",
                 ord,
                 "Europe");
-        data.initCallback("http://89.169.28.251:80");
+        data.initCallback("http://x.x.x.x:80");
         init.send("https://gate-test-02.teko.io/api/initiators/default/initPayment", data);
     }
 }

@@ -3,8 +3,8 @@ package com.HttpTEKO.isPaymentPossible;
 import com.HttpTEKO.HttpRequestPOST;
 import com.HttpTEKO.InitPayment.Order;
 import com.HttpTEKO.InitPayment.Payment;
-import com.HttpTEKO.isPaymentPossible.merchData;
 
+/** Формирует json для протокола инициатора */
 public class merchantRequest {
     public static void main(String[] args) {
         HttpRequestPOST init = new HttpRequestPOST();
@@ -20,6 +20,6 @@ public class merchantRequest {
                 ord,
                 "Europe");
         data.initPayment(new Payment(5000, 343, 3));
-        init.send("http://89.169.52.44:80", data);
+        init.send("http://x.x.x.x:80", data);
     }
 }

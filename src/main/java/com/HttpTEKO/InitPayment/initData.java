@@ -1,5 +1,6 @@
 package com.HttpTEKO.InitPayment;
 
+/** Класс для формирования json протокола инициатора */
 public class initData {
     Client client;
     String product;

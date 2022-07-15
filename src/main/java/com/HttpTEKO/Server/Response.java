@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+/** Класс для формирования ответа сервера */
 public class Response  {
     private OutputStream out;
     private int statusCode;

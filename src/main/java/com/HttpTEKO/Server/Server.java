@@ -16,10 +16,12 @@ import java.net.Socket;
 
 import java.util.Date;
 
+/** Основной класс сервера */
 public class Server {
-    static Document doc;
     static MongoCollection<Document> collection;
+    static Document doc;
     public static void main(String[] args) {
+        /** Подключение к mongodb */
         var mongoClient = MongoClients.create("mongodb://localhost:27017");
         MongoDatabase database = mongoClient.getDatabase("testdb");
         collection = database.getCollection("merchant");
@@ -37,6 +39,8 @@ public class Server {
                 System.out.println(connectionSocket);
                 System.out.println("Receive:");
 
+                /** Обработка размера данных.
+                 *  postDataI */
                 try (BufferedReader reader = new BufferedReader(
                         new InputStreamReader(connectionSocket.getInputStream()))) {
                     int postDataI = -1;
@@ -49,11 +53,14 @@ public class Server {
                                     line.length()));
                         }
                     }
+
+                    /** Чтение данных */
                     String jsonString = "";
                     for (int i = 0; i < postDataI; i++) {
                         int intParser = reader.read();
                         jsonString += (char) intParser;
                     }
+
                     System.out.println(jsonString);
                     String json = "";
                     String success = "false";
@@ -63,6 +70,7 @@ public class Server {
                         success = "true";
                         doc.append("receive", jsonString);
                         try {
+                            /** Создание json */
                             Gson gson = new Gson();
                             JsonObject map = gson.fromJson(jsonString, JsonObject.class);
                             response.setResponseCode(200, "OK");
@@ -92,9 +100,13 @@ public class Server {
                         doc.append("receive", "Missing json");
                         json = errorMessage(response, "Missing json");
                     }
+
+                    /** Создание ответа  */
                     response.addHeader("Content-Type", "application/json");
                     response.addBody(json);
                     response.send();
+
+                    /** Запись в mongodb */
                     doc.append("success", success);
                     doc.append("sent", json);
                     collection.insertOne(doc);
@@ -109,6 +121,7 @@ public class Server {
         }
     }
 
+    /** Функция формирования ответа об ошибке */
     public static String errorMessage(Response response, String message){
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         response.setResponseCode(402, "Server error");

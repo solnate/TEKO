@@ -3,6 +3,8 @@ import com.HttpTEKO.InitPayment.Order;
 import com.HttpTEKO.InitPayment.Payment;
 import com.HttpTEKO.InitPayment.initData;
 
+/** Класс для формирования json протокола мерчанта.
+ * Наследован от initData */
 public class merchData extends initData {
     public merchData(
             String id, String showcase,
