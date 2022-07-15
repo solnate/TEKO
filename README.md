@@ -1,6 +1,7 @@
 ## initiatorsRequest
 - InitPayment/
 - POST-запрос протокола инициатора
+- Можно получить callback на Server
 ```
 null: [HTTP/1.1 200 OK]
 X-Frame-Options: [DENY]
