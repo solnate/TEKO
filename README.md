@@ -49,6 +49,7 @@ Receive:
 ```
 ## Server
 - Http-обработчик запроса мерчанта и передачи ответа
+- Тестировал на открытом порту + merchantRequest + https://reqbin.com/
 
 ``` Socket[addr=/89.169.52.44,port=56916,localport=80]
     Receive:
