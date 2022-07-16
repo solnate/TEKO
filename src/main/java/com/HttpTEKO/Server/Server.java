@@ -15,12 +15,8 @@ public class Server {
             ServerSocket serverSocket = new ServerSocket(80);
             while(serverSocket.isBound() && !serverSocket.isClosed()) {
                 Socket connectionSocket = serverSocket.accept();
-                // create a new thread object
                 ServerHandler clientSock
                         = new ServerHandler(connectionSocket);
-
-                // This thread will handle the client
-                // separately
                 new Thread(clientSock).start();
             }
 
