@@ -1,3 +1,6 @@
+## RequestFromFile
+- Post-запрос с чтением из файла
+
 ## initiatorsRequest
 - InitPayment/
 - POST-запрос протокола инициатора
