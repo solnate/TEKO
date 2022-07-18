@@ -6,7 +6,7 @@ import com.HttpTEKO.InitPayment.Payment;
 
 /** Формирует json для протокола инициатора */
 public class merchantRequest {
-    public static void main(String[] args) {
+    public static void merchantRequest() {
         HttpRequestPOST init = new HttpRequestPOST();
         //Dst dst = new Dst("Y6UBATOP9000", true, "Europe");
         Order ord = new Order("1122334455", 142843063,"transaction",

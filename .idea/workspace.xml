@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="26a72488-fd6b-4c0c-91fd-773300bb8a24" name="Changes" comment="MultiThreading">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/InitPayment/initiator.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/isPaymentPossible/merchant.json" afterDir="false" />
+    <list default="true" id="26a72488-fd6b-4c0c-91fd-773300bb8a24" name="Changes" comment="missing json">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/Server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/Server/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/Server/ServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/Server/ServerHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/isPaymentPossible/merchantRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/isPaymentPossible/merchantRequest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +60,7 @@
       <recent name="C:\Users\solna\IdeaProjects\TEKO\src\main\java\com\HttpTEKO\InitPayment" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.com.HttpTEKO.isPaymentPossible.merchantRequest">
+  <component name="RunManager" selected="Application.com.HttpTEKO.Server.Server">
     <configuration name="RequestFromFile" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.HttpTEKO.RequestFromFile" />
       <module name="TEKO" />
@@ -122,8 +121,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.com.HttpTEKO.isPaymentPossible.merchantRequest" />
         <item itemvalue="Application.com.HttpTEKO.Server.Server" />
+        <item itemvalue="Application.com.HttpTEKO.isPaymentPossible.merchantRequest" />
         <item itemvalue="Application.com.HttpTEKO.InitPayment.initiatorsRequest" />
       </list>
     </recent_temporary>
@@ -148,7 +147,9 @@
       <workItem from="1657787869740" duration="38404000" />
       <workItem from="1657834369674" duration="4292000" />
       <workItem from="1657885288655" duration="17331000" />
-      <workItem from="1657968246624" duration="1891000" />
+      <workItem from="1657968246624" duration="2716000" />
+      <workItem from="1657987111889" duration="4062000" />
+      <workItem from="1658140874596" duration="9284000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1657548278867</created>
@@ -269,7 +270,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657969333162</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="missing json">
+      <created>1657970162408</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1657970162408</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -298,7 +306,8 @@
     <MESSAGE value="Pretty json" />
     <MESSAGE value="RequestFromFile" />
     <MESSAGE value="MultiThreading" />
-    <option name="LAST_COMMIT_MESSAGE" value="MultiThreading" />
+    <MESSAGE value="missing json" />
+    <option name="LAST_COMMIT_MESSAGE" value="missing json" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

@@ -14,15 +14,20 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.Date;
 
+import static com.HttpTEKO.isPaymentPossible.merchantRequest.merchantRequest;
+
 public class ServerHandler implements Runnable {
     private final Socket clientSocket;
+    private String success;
 
     public ServerHandler(Socket socket) {
         clientSocket = socket;
+        success = "";
     }
 
     public void run() {
         try {
+            System.setProperty("DEBUG.MONGO", "false");
             /** Подключение к mongodb */
             var mongoClient = MongoClients.create("mongodb://localhost:27017");
             MongoDatabase database = mongoClient.getDatabase("testdb");
@@ -34,72 +39,29 @@ public class ServerHandler implements Runnable {
             System.out.println(clientSocket);
             System.out.println("Receive:");
 
-            /** Обработка размера данных.
-             *  postDataI */
+            /** Парсинг заголовка */
             try (BufferedReader reader = new BufferedReader(
                     new InputStreamReader(clientSocket.getInputStream()))) {
-                int postDataI = -1;
-                String line;
-                while ((line = reader.readLine()) != null && (line.length() != 0)) {
-                    System.out.println(line);
-                    if (line.contains("Content-Length:")) {
-                        postDataI = Integer.parseInt(line.substring(
-                                line.indexOf("Content-Length:") + 16,
-                                line.length()));
+                String json = "{\"error\": \"internal\"}";
+                String line = reader.readLine();
+                System.out.println(line);
+                String[] words = line.split(" ");
+                json = getData(reader);
+                if (!success.equals("false")){
+                    if (words[1].equals("/initPayment")) {
+                        json = POST(doc, json);
                     }
-                }
-
-                /** Чтение данных */
-                String jsonString = "";
-                for (int i = 0; i < postDataI; i++) {
-                    int intParser = reader.read();
-                    jsonString += (char) intParser;
-                }
-
-                /** Pretty json */
-                Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                JsonElement je = JsonParser.parseString(jsonString);
-                String prettyJsonString = gson.toJson(je);
-                System.out.println(prettyJsonString);
-
-                String json = "";
-                String success = "false";
-                OutputStream out = clientSocket.getOutputStream();
-                Response response = new Response(out);
-                if (jsonString != "") {
-                    success = "true";
-                    doc.append("receive", jsonString);
-                    try {
-                        /** Создание json */
-                        JsonObject map = gson.fromJson(jsonString, JsonObject.class);
-                        response.setResponseCode(200, "OK");
-                        if (map.has("payment")) {
-                            Payment payment = new Payment(
-                                    map.getAsJsonObject("payment").get("amount").getAsInt(),
-                                    map.getAsJsonObject("payment").get("currency").getAsInt(),
-                                    map.getAsJsonObject("payment").get("exponent").getAsInt()
-                            );
-                            ResponseData data = new ResponseData("true",
-                                    "11223344556677",
-                                    "1537134068907",
-                                    payment);
-                            json = gson.toJson(data);
-                        } else {
-                            success = "false";
-                            doc.append("receive", "Missing payment");
-                            json = errorMessage(response, "Missing payment");
-                        }
-                    } catch (JsonSyntaxException jse) {
-                        success = "false";
-                        doc.append("receive", "Invalid json");
-                        json = errorMessage(response, "Invalid json");
+                    else if (words[1].equals("/isPaymentPossible")) {
+                        merchantRequest();
                     }
-                } else {
-                    doc.append("receive", "Missing json");
-                    json = errorMessage(response, "Missing json");
+                    else{
+                        json = errorMessage("Error url");
+                    }
                 }
 
                 /** Создание ответа  */
+                OutputStream out = clientSocket.getOutputStream();
+                Response response = new Response(out);
                 response.addHeader("Content-Type", "application/json");
                 response.addBody(json);
                 response.send();
@@ -117,11 +79,90 @@ public class ServerHandler implements Runnable {
             System.err.println(e);
         }
     }
+
     /** Функция формирования ответа об ошибке */
-    public static String errorMessage(Response response, String message){
+    public static String errorMessage(String message){
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().create();
-        response.setResponseCode(402, "Server error");
         ResponseData data = new ResponseData("false", 402, message);
         return gson.toJson(data);
     }
+
+    public String getData(BufferedReader reader){
+        int postDataI = -1;
+        String line;
+        String data = "";
+
+        /** Обработка размера данных.
+         *  postDataI */
+        try {
+            while ((line = reader.readLine()) != null && (line.length() != 0)) {
+                System.out.println(line);
+                if (line.contains("Content-Length:")) {
+                    postDataI = Integer.parseInt(line.substring(
+                            line.indexOf("Content-Length:") + 16,
+                            line.length()));
+                }
+            }
+
+            /** Чтение данных */
+                for (int i = 0; i < postDataI; i++) {
+                    int intParser = reader.read();
+                    data += (char) intParser;
+                }
+        } catch (IOException e){
+            success = "false";
+            e.printStackTrace();
+            return errorMessage("Data receive error");
+        }
+
+        /** Pretty json */
+        try {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            JsonElement je = JsonParser.parseString(data);
+            String prettyJsonString = gson.toJson(je);
+            System.out.println(prettyJsonString);
+        } catch (JsonSyntaxException jse) {
+            success = "false";
+            jse.printStackTrace();
+            return errorMessage("Json error");
+        }
+        return data;
+    }
+
+    public String POST(Document doc, String jsonString) {
+        String json = "";
+        success = "true";
+        doc.append("receive", jsonString);
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        try {
+            /** Создание json */
+            JsonObject map = gson.fromJson(jsonString, JsonObject.class);
+            if (map.has("payment")) {
+                Payment payment = new Payment(
+                        map.getAsJsonObject("payment").get("amount").getAsInt(),
+                        map.getAsJsonObject("payment").get("currency").getAsInt(),
+                        map.getAsJsonObject("payment").get("exponent").getAsInt()
+                );
+                ResponseData data = new ResponseData("true",
+                        "11223344556677",
+                        "1537134068907",
+                        payment);
+                json = gson.toJson(data);
+            } else {
+                success = "false";
+                doc.append("receive", "Missing payment");
+                return errorMessage("Missing payment");
+            }
+        } catch (JsonSyntaxException jse) {
+            success = "false";
+            doc.append("receive", "Invalid json");
+            return errorMessage("Invalid json");
+        }
+        return json;
+    }
+
+    public String GET(Document doc, BufferedReader reader){
+        return "";
+    }
+
 }
