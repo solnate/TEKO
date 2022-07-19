@@ -79,7 +79,18 @@ public class ServerHandler implements Runnable {
                             case "/isPaymentPossible" -> {
                                 // Поиск в базе информации о наличии ресурсов
                                 Document val = items.find(eq("_id", payment.currency)).first();
-                                int smth = val.getInteger("value");
+                                int smth;
+                                if(val == null){
+                                    Document doc = new Document();
+                                    doc.append("_id", payment.currency);
+                                    doc.append("value", 0);
+                                    items.insertOne(doc);
+                                    smth = 0;
+                                }
+                                else {
+                                    smth = val.getInteger("value");
+                                }
+
                                 if (smth >= payment.amount) {
                                     ResponseData tempdata = PostHandlers.isPaymentPossible(map);
                                     data = gson.toJson(tempdata);
