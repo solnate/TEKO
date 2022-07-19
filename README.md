@@ -4,6 +4,7 @@
 - Примеры запросов:
 ```
 GET http://localhost:80/initPayment
+GET http://localhost:80/getPaymentsByTag
 ```
 ```
 POST http://localhost:80/isPaymentPossible
