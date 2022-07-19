@@ -1,128 +1,23 @@
-## RequestFromFile
-- Post-запрос с чтением из файла
-
-## initiatorsRequest
-- InitPayment/
-- POST-запрос протокола инициатора
-- Можно получить callback на Server
-```
-null: [HTTP/1.1 200 OK]
-X-Frame-Options: [DENY]
-Strict-Transport-Security: [max-age=31536000; includeSubDomains; preload]
-Server: [nginx/1.18.0 (Ubuntu)]
-X-Content-Type-Options: [nosniff]
-Connection: [keep-alive]
-Content-Length: [90]
-Date: [Fri, 15 Jul 2022 17:42:24 GMT]
-Content-Type: [application/json; charset=UTF-8]
-Receive:
-{
-	"success": true,
-	"result": {
-		"tx": {
-			"id": "62d1a70060b216e44a57b9c2",
-			"start_t": 1657906944561
-		}
-	}
-}
-```
-## merchantRequest 
-- isPaymentPossible/
-- POST-запрос протокола мерчанта
-```
-null: [HTTP/1.1 200 OK]
-Content-Length: [163]
-Content-Type: [application/json]
-Receive:
-{
-	"success": "true",
-	"result": {
-		"tx": {
-			"id": "11223344556677",
-			"start_t": "1537134068907"
-		},
-		"src_payment": {
-			"amount": 10100,
-			"currency": 643,
-			"exponent": 3
-		},
-		"rate": 110,
-		"code": 0
-	}
-}
-```
 ## Server
-- Http-обработчик запроса мерчанта и передачи ответа
-- Тестировал на открытом порту + merchantRequest + https://reqbin.com/
-
-``` Socket[addr=/89.169.52.44,port=56916,localport=80]
-    Receive:
-    POST / HTTP/1.1
-    Content-Type: application/json
-    Signature: qCj9kuQq9/7Yd4wTcwu26ZlD8ko=
-    User-Agent: Java/18.0.1.1
-    Host: 89.169.52.44
-    Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2
-    Connection: keep-alive
-    Content-Length: 401
-    {
-	"client": {
-		"id": "praktika_2022",
-		"showcase": "app"
-	},
-	"product": "spotify",
-	"payment": {
-		"amount": 10100,
-		"currency": 643,
-		"exponent": 3
-	},
-	"src_payment": {
-		"amount": 5000,
-		"currency": 343,
-		"exponent": 3
-	},
-	"src": {
-		"cls": "mc",
-		"phone_number": "78005553535",
-		"operator": "mts"
-	},
-	"order": {
-		"transaction": {
-			"id": "1122334455",
-			"start_t": 142843063
-		},
-		"cls": "transaction",
-		"extra": {
-			"from": "mobile_app",
-			"some_key": "some_value"
-		}
-	},
-	"tag": "Europe"
-  }
-
-    Sent:
-    HTTP/1.1 200 OK
-    Content-Length: 163
-    Content-Type: application/json
-    {
-	"success": "true",
-	"result": {
-		"tx": {
-			"id": "11223344556677",
-			"start_t": "1537134068907"
-		},
-		"src_payment": {
-			"amount": 10100,
-			"currency": 643,
-			"exponent": 3
-		},
-		"rate": 110,
-		"code": 0
-	}
-   }
+- При получение GET-запроса отправляет POST-запрос на сервис TEKO и пересылает его
+- При получение POST-запроса производит работу с базой данных в Mongodb и формирует ответ на основе шаблона API
+- Примеры запросов:
 ```
-## Пример записей в mongodb
-![alt text](https://github.com/solnate/TEKO/blob/master/Снимок%20экрана%202022-07-15%20210132.png)
+GET http://localhost:80/initPayment
+```
+```
+POST http://localhost:80/isPaymentPossible
+Body:
+{"client":{"id":"test_client","showcase":"showcases"},"product":"test_client_product","payment":{"amount":10000,"currency":623,"exponent":2},"src_payment":{"amount":5000,"currency":623,"exponent":2},"rate":110,"src":{"phone_number":"79771234567","operator":"tele2_ru","cls":"mc"},"dst":{"id":"login","extra":{"premium":true,"game_server":"Europe"}},"order":{"transaction":{"id":"qwerty","start_t":1508336966892,"finish_t":1508336969354},"cls":"transaction","extra":{"from":"mobile_app","some_key":"some_value"}},"tx":{"id":"59e765510cf26db591dbfb43","start_t":1508336977892},"partner_tx":{"id":"11223344556677","start_t":1537134068907},"extra":{"key":"important info"}}
+```
+## Некоторые пояснения
+### isPaymentPossible
+- Проверяет наличие ресурсов по id в базе и делает запись с временным id транзакции
+### resumePayment
+- Если находит id, созданный isPaymentPossible, то проводит работу с данными в базе и постоянную запись о платеже
+
+### TO DO
+
 # Задание
 > 1. Разобраться с тем, что за формат такой JSON
 > 2. Выбрать библиотеку работы с JSON на языке программирования, на котором планируете делать (идеальный вариант Java/Scala, библиотека json4s)
