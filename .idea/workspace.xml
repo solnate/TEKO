@@ -4,25 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="26a72488-fd6b-4c0c-91fd-773300bb8a24" name="Changes" comment="rework server">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/Server/GetHandlers.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/Server/JsonBuilder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/Server/PostHandlers.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/payload/Tx.java" afterDir="false" />
+    <list default="true" id="26a72488-fd6b-4c0c-91fd-773300bb8a24" name="Changes" comment="Full rework">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/HttpRequestPOST.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/Server/HttpRequestPOST.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/InitPayment/Dst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/payload/Dst.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/InitPayment/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/payload/Order.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/InitPayment/Payment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/payload/Payment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/InitPayment/initData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/payload/initData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/InitPayment/initiator.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/payload/initiator.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/InitPayment/initiatorsRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/RequestFromFile.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/Server/ResponseData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/Server/ResponseData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/Server/PostHandlers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/Server/PostHandlers.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/Server/ServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/Server/ServerHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/isPaymentPossible/merchData.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/isPaymentPossible/merchant.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/HttpTEKO/isPaymentPossible/merchantRequest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -151,7 +137,7 @@
       <workItem from="1657968246624" duration="2716000" />
       <workItem from="1657987111889" duration="4062000" />
       <workItem from="1658140874596" duration="9385000" />
-      <workItem from="1658179453178" duration="22707000" />
+      <workItem from="1658179453178" duration="25294000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1657548278867</created>
@@ -286,7 +272,14 @@
       <option name="project" value="LOCAL" />
       <updated>1658164513191</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Full rework">
+      <created>1658242892333</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1658242892333</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -317,7 +310,8 @@
     <MESSAGE value="MultiThreading" />
     <MESSAGE value="missing json" />
     <MESSAGE value="rework server" />
-    <option name="LAST_COMMIT_MESSAGE" value="rework server" />
+    <MESSAGE value="Full rework" />
+    <option name="LAST_COMMIT_MESSAGE" value="Full rework" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

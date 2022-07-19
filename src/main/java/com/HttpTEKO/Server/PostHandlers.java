@@ -3,6 +3,7 @@ package com.HttpTEKO.Server;
 import com.HttpTEKO.payload.Payment;
 import com.HttpTEKO.payload.Tx;
 import com.google.gson.JsonObject;
+import org.apache.commons.lang.RandomStringUtils;
 
 public class PostHandlers {
     public static ResponseData isPaymentPossible(JsonObject map){
@@ -12,7 +13,7 @@ public class PostHandlers {
                 map.getAsJsonObject("payment").get("exponent").getAsInt()
         );
         ResponseData data = new ResponseData("true",
-                "11223344556677",
+                GeneratingRandomString(),
                 "1537134068907",
                 payment);
         return data;
@@ -29,5 +30,12 @@ public class PostHandlers {
                                 .add("finish_t", 2342835)));
 
         return data.toJson();
+    }
+
+    public static String GeneratingRandomString() {
+        int length = 10;
+        boolean useLetters = true;
+        boolean useNumbers = true;
+        return RandomStringUtils.random(length, useLetters, useNumbers);
     }
 }

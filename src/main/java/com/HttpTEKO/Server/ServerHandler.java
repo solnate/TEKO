@@ -33,6 +33,7 @@ public class ServerHandler implements Runnable {
             var mongoClient = MongoClients.create("mongodb://localhost:27017");
             MongoDatabase database = mongoClient.getDatabase("testdb");
             MongoCollection<Document> transactions = database.getCollection("transactions");
+            MongoCollection<Document> completeTransactions = database.getCollection("complete");
             MongoCollection<Document> items = database.getCollection("items");
 
             System.out.println();
@@ -79,7 +80,7 @@ public class ServerHandler implements Runnable {
                                 // Поиск в базе информации о наличии ресурсов
                                 Document val = items.find(eq("_id", payment.currency)).first();
                                 int smth = val.getInteger("value");
-                                if (smth > payment.amount) {
+                                if (smth >= payment.amount) {
                                     ResponseData tempdata = PostHandlers.isPaymentPossible(map);
                                     data = gson.toJson(tempdata);
                                     Document doc = new Document();
@@ -113,6 +114,11 @@ public class ServerHandler implements Runnable {
                                             Updates.set("value", srcCurrency + src_payment.amount));
                                     data = PostHandlers.generateResponseJson(tx);
                                     transactions.deleteOne(doc);
+
+                                    Document complete = gson.fromJson(data, Document.class);
+                                    complete.append("payment", map.getAsJsonObject("payment").toString());
+                                    complete.append("src_payment", map.getAsJsonObject("src_payment").toString());
+                                    completeTransactions.insertOne(complete);
                                 }
                             }
 
