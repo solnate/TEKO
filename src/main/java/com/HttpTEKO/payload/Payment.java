@@ -1,9 +1,9 @@
-package com.HttpTEKO.InitPayment;
+package com.HttpTEKO.payload;
 
 public class Payment {
-    int amount;
-    int currency;
-    int exponent;
+    public int amount;
+    public int currency;
+    public int exponent;
     public Payment(int amount, int currency, int exponent){
         this.amount = amount;
         this.currency = currency;

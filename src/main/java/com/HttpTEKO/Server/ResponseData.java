@@ -1,6 +1,7 @@
 package com.HttpTEKO.Server;
 
-import com.HttpTEKO.InitPayment.Payment;
+import com.HttpTEKO.payload.Payment;
+import com.HttpTEKO.payload.Tx;
 import com.google.gson.annotations.Expose;
 
 public class ResponseData {
@@ -13,6 +14,11 @@ public class ResponseData {
                         Payment payment){
         this.success = success;
         this.result = new Result(id, start_t, payment);
+    }
+    public ResponseData(String success,
+                        String id, String start_t){
+        this.success = success;
+        this.result = new Result(id, start_t);
     }
     public ResponseData(String success,
                         int code, String description){
@@ -39,13 +45,9 @@ public class ResponseData {
             this.rate = 110;
             this.src_payment = payment;
         }
-        class Tx{
-            String id;
-            String start_t;
-            public Tx(String id, String start_t){
-                this.id = id;
-                this.start_t = start_t;
-            }
+        public Result(String id, String start_t){
+            this.tx = new Tx(id, start_t);
         }
+
     }
 }

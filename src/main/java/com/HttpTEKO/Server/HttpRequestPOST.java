@@ -1,4 +1,4 @@
-package com.HttpTEKO;
+package com.HttpTEKO.Server;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -22,10 +22,7 @@ import java.util.Map;
 
 /** Выполняет POST-запрос */
 public class HttpRequestPOST {
-    public void send(String link, Object data) {
-        /** Создание json */
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String json = gson.toJson(data);
+    public String send(String link, String json) {
         byte[] out = json.getBytes();
         byte[] key = "TestSecret".getBytes();
 
@@ -87,7 +84,9 @@ public class HttpRequestPOST {
             while ((inputLine = in.readLine()) != null) {
                 content.append(inputLine);
             }
+
             /** Pretty json */
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
             JsonElement je = JsonParser.parseString(content.toString());
             String prettyJsonString = gson.toJson(je);
             System.out.println(prettyJsonString);
@@ -97,14 +96,17 @@ public class HttpRequestPOST {
             doc.append("received", content.toString());
             collection.insertOne(doc);
             in.close();
+            return prettyJsonString;
 
         } catch (MalformedURLException e){
             e.printStackTrace();
+            return "Error" + e;
         } catch (IOException e){
             System.err.println(e.getMessage());
             doc.append("status code", 408);
             doc.append("error", e.getMessage().toString());
             collection.insertOne(doc);
+            return "Error" + e;
         }
     }
 

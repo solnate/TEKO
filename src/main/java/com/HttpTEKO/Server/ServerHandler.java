@@ -1,20 +1,21 @@
 package com.HttpTEKO.Server;
 
-import com.HttpTEKO.InitPayment.Payment;
+import com.HttpTEKO.payload.Payment;
+import com.HttpTEKO.payload.Tx;
 import com.google.gson.*;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
 import org.bson.Document;
+import static com.mongodb.client.model.Filters.*;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.Socket;
-import java.util.Date;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
-import static com.HttpTEKO.isPaymentPossible.merchantRequest.merchantRequest;
 
 public class ServerHandler implements Runnable {
     private final Socket clientSocket;
@@ -22,77 +23,154 @@ public class ServerHandler implements Runnable {
 
     public ServerHandler(Socket socket) {
         clientSocket = socket;
-        success = "";
+        success = "false";
     }
 
     public void run() {
         try {
             System.setProperty("DEBUG.MONGO", "false");
-            /** Подключение к mongodb */
+            /* Подключение к mongodb */
             var mongoClient = MongoClients.create("mongodb://localhost:27017");
             MongoDatabase database = mongoClient.getDatabase("testdb");
-            MongoCollection<Document> collection = database.getCollection("merchant1");
-            Document doc = new Document();
-            doc.append("date", new Date());
+            MongoCollection<Document> transactions = database.getCollection("transactions");
+            MongoCollection<Document> items = database.getCollection("items");
 
             System.out.println();
             System.out.println(clientSocket);
             System.out.println("Receive:");
 
-            /** Парсинг заголовка */
+            /* Парсинг заголовка */
             try (BufferedReader reader = new BufferedReader(
                     new InputStreamReader(clientSocket.getInputStream()))) {
-                String json = "{\"error\": \"internal\"}";
+                String data;
                 String line = reader.readLine();
                 System.out.println(line);
                 String[] words = line.split(" ");
-                json = getData(reader);
-                if (!success.equals("false")){
-                    if (words[1].equals("/initPayment")) {
-                        json = POST(doc, json);
-                    }
-                    else if (words[1].equals("/isPaymentPossible")) {
-                        merchantRequest();
-                    }
-                    else{
-                        json = errorMessage("Error url");
+                data = getData(reader);
+
+                // Обработка GET-запросов
+                if (words[0].equals("GET")) {
+                    switch (words[1]) {
+                        case "/initPayment" -> data = GetHandlers.initPayment("");
+                        case "/initRedirectPayment" -> data = GetHandlers.initPayment("http://89.169.52.44:80");
+                        case "/getPaymentsByTag" -> data = GetHandlers.getPaymentsByTag();
+                        case "/getPaymentById" -> data = GetHandlers.getPaymentByIdOrStatus("id");
+                        case "/getPaymentStatus" -> data = GetHandlers.getPaymentByIdOrStatus("status");
+                        //TO DO
+                        case "/rollbackPayment" -> data = GetHandlers.getPaymentsByTag();
+                        default -> {
+                            success = "false";
+                            data = errorMessage("Error url");
+                        }
                     }
                 }
 
-                /** Создание ответа  */
+                // Обработка POST-запросов
+                else if (words[0].equals("POST")) {
+                    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                    JsonObject map;
+                    try {
+                        map = gson.fromJson(data, JsonObject.class);
+                        Payment payment = gson.fromJson(map.getAsJsonObject("payment"), Payment.class);
+                        switch (words[1]) {
+
+                            // Проверка возможности оплаты
+                            case "/isPaymentPossible" -> {
+                                // Поиск в базе информации о наличии ресурсов
+                                Document val = items.find(eq("_id", payment.currency)).first();
+                                int smth = val.getInteger("value");
+                                if (smth > payment.amount) {
+                                    ResponseData tempdata = PostHandlers.isPaymentPossible(map);
+                                    data = gson.toJson(tempdata);
+                                    Document doc = new Document();
+                                    doc.append("_id", tempdata.result.tx.id);
+                                    transactions.insertOne(doc);
+                                } else {
+                                    data = errorMessage("Insufficient money");
+                                }
+                            }
+
+                            // Resume payment
+                            case "/resumePayment" -> {
+                                success = "true";
+                                Document pay = items.find(eq("_id", payment.currency)).first();
+                                int paymentCurrency = pay.getInteger("value");
+
+                                Tx tx = gson.fromJson(map.getAsJsonObject("partner_tx"), Tx.class);
+                                Document doc = transactions.find(eq("_id", tx.id)).first();
+
+                                if (!doc.isEmpty()) {
+                                    success = "true";
+                                    items.updateOne(Filters.eq("_id", payment.currency),
+                                            Updates.set("value", paymentCurrency - payment.amount));
+
+                                    Payment src_payment =
+                                            gson.fromJson(map.getAsJsonObject("src_payment"), Payment.class);
+                                    Document src = items.find(eq("_id", src_payment.currency)).first();
+                                    int srcCurrency = src.getInteger("value");
+
+                                    items.updateOne(Filters.eq("_id", src_payment.currency),
+                                            Updates.set("value", srcCurrency + src_payment.amount));
+                                    data = PostHandlers.generateResponseJson(tx);
+                                    transactions.deleteOne(doc);
+                                }
+                            }
+
+                            // cancel payment
+                            case "/cancelPayment" -> {
+                                success = "true";
+                                Tx tx = gson.fromJson(map.getAsJsonObject("partner_tx"), Tx.class);
+                                Document doc = transactions.find(eq("_id", tx.id)).first();
+                                transactions.deleteOne(doc);
+                                data = PostHandlers.generateResponseJson(tx);
+                            }
+                            case "/rollbackPayment" -> {
+                                // rollback payment and generate ids
+                                //TO DO
+                                Tx tx = gson.fromJson(map.getAsJsonObject("partner_tx"), Tx.class);
+                                data = PostHandlers.generateResponseJson(tx);
+                            }
+                            default -> {
+                                data = errorMessage("Error url");
+                            }
+                        }
+                        if (!data.contains("false")){success = "true";}
+                    } catch (JsonSyntaxException | NullPointerException jse) {
+                        data = errorMessage(jse.getMessage());
+                    }
+                }
+
+                /* Создание ответа  */
                 OutputStream out = clientSocket.getOutputStream();
                 Response response = new Response(out);
                 response.addHeader("Content-Type", "application/json");
-                response.addBody(json);
+                response.addBody(data);
                 response.send();
 
-                /** Запись в mongodb */
-                doc.append("success", success);
-                doc.append("sent", json);
-                collection.insertOne(doc);
                 out.close();
             } catch (IOException e) {
                 System.err.println(e.getMessage());
             }
             clientSocket.close();
         }catch (IOException e){
-            System.err.println(e);
+           e.printStackTrace();
         }
     }
 
-    /** Функция формирования ответа об ошибке */
+    /* Функция формирования ответа об ошибке */
     public static String errorMessage(String message){
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().create();
         ResponseData data = new ResponseData("false", 402, message);
         return gson.toJson(data);
     }
 
+    // Получение данных
     public String getData(BufferedReader reader){
         int postDataI = -1;
         String line;
-        String data = "";
+        String data;
 
-        /** Обработка размера данных.
+        /* Обработка размера данных.
          *  postDataI */
         try {
             while ((line = reader.readLine()) != null && (line.length() != 0)) {
@@ -104,65 +182,35 @@ public class ServerHandler implements Runnable {
                 }
             }
 
-            /** Чтение данных */
-                for (int i = 0; i < postDataI; i++) {
+            /* Чтение данных */
+            StringBuilder dataBuilder = new StringBuilder();
+            for (int i = 0; i < postDataI; i++) {
                     int intParser = reader.read();
-                    data += (char) intParser;
+                    dataBuilder.append((char) intParser);
                 }
+            data = dataBuilder.toString();
+
         } catch (IOException e){
-            success = "false";
             e.printStackTrace();
             return errorMessage("Data receive error");
         }
 
-        /** Pretty json */
+        /* Pretty json */
         try {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             JsonElement je = JsonParser.parseString(data);
             String prettyJsonString = gson.toJson(je);
             System.out.println(prettyJsonString);
         } catch (JsonSyntaxException jse) {
-            success = "false";
             jse.printStackTrace();
             return errorMessage("Json error");
         }
         return data;
     }
 
-    public String POST(Document doc, String jsonString) {
-        String json = "";
-        success = "true";
-        doc.append("receive", jsonString);
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        try {
-            /** Создание json */
-            JsonObject map = gson.fromJson(jsonString, JsonObject.class);
-            if (map.has("payment")) {
-                Payment payment = new Payment(
-                        map.getAsJsonObject("payment").get("amount").getAsInt(),
-                        map.getAsJsonObject("payment").get("currency").getAsInt(),
-                        map.getAsJsonObject("payment").get("exponent").getAsInt()
-                );
-                ResponseData data = new ResponseData("true",
-                        "11223344556677",
-                        "1537134068907",
-                        payment);
-                json = gson.toJson(data);
-            } else {
-                success = "false";
-                doc.append("receive", "Missing payment");
-                return errorMessage("Missing payment");
-            }
-        } catch (JsonSyntaxException jse) {
-            success = "false";
-            doc.append("receive", "Invalid json");
-            return errorMessage("Invalid json");
-        }
-        return json;
+    // Проверка json
+    public static boolean validateIsPaymentPossible(JsonObject map){
+        return map.has("payment") && map.has("client") && map.has("product") &&
+                map.has("order") && map.has("tx") && map.has("src_cls");
     }
-
-    public String GET(Document doc, BufferedReader reader){
-        return "";
-    }
-
 }

@@ -1,4 +1,4 @@
-package com.HttpTEKO.InitPayment;
+package com.HttpTEKO.payload;
 
 /** Класс для формирования json протокола инициатора */
 public class initData {
